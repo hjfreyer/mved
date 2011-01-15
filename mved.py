@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -----------------------------------------------------------------
-# mved -- Renames files in the current directory through a text editor.
+# mved.py -- Renames files in the current directory through a text editor.
 # Copyright 2007 Michael Kelly (michael@michaelkelly.org)
 #
 # Edits in 2011 by Hunter Freyer (yt@hjfreyer.com).
@@ -8,13 +8,11 @@
 # This program is released under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-#
-# Wed Aug 22 23:00:48 PDT 2007
-# -----------------------------------------------------------------
 
-import sys
+
 import os
 import re
+import sys
 import tempfile
 
 from optparse import OptionParser, OptionGroup
