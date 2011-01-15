@@ -1,7 +1,9 @@
-x#!/usr/bin/python
+#!/usr/bin/python
 # -----------------------------------------------------------------
 # mved -- Renames files in the current directory through a text editor.
 # Copyright 2007 Michael Kelly (michael@michaelkelly.org)
+#
+# Edits in 2011 by Hunter Freyer (yt@hjfreyer.com).
 #
 # This program is released under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either version 2
@@ -33,7 +35,7 @@ def sorted_file_list(directory, all=False):
       if not hidden.match(file):
         new_files.append(file)
     files = new_files
-  
+
   files.sort()
   return files
 
@@ -65,8 +67,12 @@ def confirm(msg, default=False):
 
 def main(argv):
   opt_parser = OptionParser(usage='%prog [OPTIONS] [PATTERN]')
-  opt_parser.add_option('-a', action='store_true', dest='list_all',
-    help='List all files (including dotfiles; excluding '.' and '..').')
+  opt_parser.add_option(
+          '-a', '--all',
+          action='store_true',
+          dest='list_all',
+          help='List all files (including dotfiles; excluding "." and "..").')
+
   opt_parser.set_defaults(list_all=False)
 
   (opts, args) = opt_parser.parse_args()
@@ -76,7 +82,7 @@ def main(argv):
   files = sorted_file_list(cwd, opts.list_all)
 
   editor = get_editor()
-  
+
   (tmpfd, tmpname) = tempfile.mkstemp()
   for file in files:
     os.write(tmpfd, file + '\n')
@@ -96,7 +102,7 @@ def main(argv):
 
   if w_status != 0:
     print '**** Editor exited with nonzero status (%d).' % w_status
-  
+
   tmp = open(tmpname, 'r')
   i = 0
   new_files = tmp.readlines()
@@ -123,7 +129,7 @@ def main(argv):
   else:
     print 'No. Aborting.'
     sys.exit(0)
-  
+
   i = 0
   while i < len(new_files):
     old_file = files[i]
@@ -139,7 +145,7 @@ def main(argv):
       except OSError, e:
         print e
     i += 1
-  
+
   print 'Done.'
 
 
