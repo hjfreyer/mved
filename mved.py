@@ -9,13 +9,13 @@
 # License as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 
-
 import os
 import re
 import sys
 import tempfile
 
 from optparse import OptionParser, OptionGroup
+
 
 def sorted_file_list(directory, all=False):
   """Get a sorted list of the files in the given directory.
@@ -37,6 +37,7 @@ def sorted_file_list(directory, all=False):
   files.sort()
   return files
 
+
 def get_editor():
   """Try to get the user's editor from $EDITOR and $VISUAL. If those
   aren't set, fall back on 'vi'."""
@@ -46,6 +47,7 @@ def get_editor():
   if editor is None:
     editor = 'vi'
   return editor
+
 
 def confirm(msg, default=False):
   """Prompt the user with message to which they can reply 'y' or 'n'."""
@@ -62,6 +64,7 @@ def confirm(msg, default=False):
     return response != 'n' and response != 'no'
   else:
     return response == 'y' or response == 'yes'
+
 
 def main(argv):
   opt_parser = OptionParser(usage='%prog [OPTIONS] [PATTERN]')
