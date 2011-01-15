@@ -1,4 +1,4 @@
-#!/usr/bin/python
+x#!/usr/bin/python
 # -----------------------------------------------------------------
 # mved -- Renames files in the current directory through a text editor.
 # Copyright 2007 Michael Kelly (michael@michaelkelly.org)
@@ -14,6 +14,7 @@ import sys
 import os
 import re
 import tempfile
+
 from optparse import OptionParser, OptionGroup
 
 def sorted_file_list(directory, all=False):
@@ -50,9 +51,9 @@ def confirm(msg, default=False):
   """Prompt the user with message to which they can reply 'y' or 'n'."""
 
   if default:
-    yesno = " [Y/n] "
+    yesno = ' [Y/n] '
   else:
-    yesno = " [y/N] "
+    yesno = ' [y/N] '
 
   sys.stdout.write(msg + yesno)
   response = sys.stdin.readline().strip().lower()
@@ -63,10 +64,9 @@ def confirm(msg, default=False):
     return response == 'y' or response == 'yes'
 
 def main(argv):
-
-  opt_parser = OptionParser(usage="%prog [OPTIONS] [PATTERN]")
-  opt_parser.add_option("-a", action="store_true", dest="list_all",
-    help='List all files (including dotfiles; excluding "." and "..").')
+  opt_parser = OptionParser(usage='%prog [OPTIONS] [PATTERN]')
+  opt_parser.add_option('-a', action='store_true', dest='list_all',
+    help='List all files (including dotfiles; excluding '.' and '..').')
   opt_parser.set_defaults(list_all=False)
 
   (opts, args) = opt_parser.parse_args()
@@ -79,7 +79,7 @@ def main(argv):
   
   (tmpfd, tmpname) = tempfile.mkstemp()
   for file in files:
-    os.write(tmpfd, file + "\n")
+    os.write(tmpfd, file + '\n')
   os.close(tmpfd)
 
   pid = os.fork()
@@ -95,7 +95,7 @@ def main(argv):
   (w_pid, w_status) = os.waitpid(pid, 0)
 
   if w_status != 0:
-    print "**** Editor exited with nonzero status (%d)." % w_status
+    print '**** Editor exited with nonzero status (%d).' % w_status
   
   tmp = open(tmpname, 'r')
   i = 0
@@ -105,23 +105,23 @@ def main(argv):
     new_file = new_file.rstrip('\n\r')
     if files[i] != new_file:
       if new_file != '':
-        print "RENAME: '%s' --> '%s'" % (old_file, new_file)
+        print 'RENAME: '%s' --> '%s'' % (old_file, new_file)
       else:
-        print "DELETE: '%s'" % old_file
+        print 'DELETE: '%s'' % old_file
     i += 1
   tmp.close()
 
   os.unlink(tmpname)
 
   if len(new_files) != len(files):
-    print "ERROR: You added or deleted a line. Don't do that. Use blank lines to delete files."
+    print 'ERROR: You added or deleted a line. Don\'t do that. Use blank lines to delete files.'
     sys.exit(1)
 
-  response = confirm("Confirm changes?", default=(w_status == 0))
+  response = confirm('Confirm changes?', default=(w_status == 0))
   if response:
-    print "Yes. Renaming..."
+    print 'Yes. Renaming...'
   else:
-    print "No. Aborting."
+    print 'No. Aborting.'
     sys.exit(0)
   
   i = 0
@@ -131,16 +131,16 @@ def main(argv):
     if old_file != new_file:
       try:
         if new_file != '':
-          print "RENAME: '%s' --> '%s'" % (old_file, new_file)
+          print 'RENAME: '%s' --> '%s'' % (old_file, new_file)
           os.rename(old_file, new_file)
         else:
-          print "DELETE: '%s'" % old_file
+          print 'DELETE: '%s'' % old_file
           os.unlink(old_file)
       except OSError, e:
         print e
     i += 1
   
-  print "Done."
+  print 'Done.'
 
 
 if __name__ == '__main__':
