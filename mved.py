@@ -110,7 +110,7 @@ delete files."""
 
 
 def main(argv):
-  opt_parser = OptionParser(usage='%prog [OPTIONS] [PATTERN]')
+  opt_parser = OptionParser(usage='%prog [OPTIONS] [DIRECTORY]')
   opt_parser.add_option(
           '-a', '--all',
           action='store_true',
