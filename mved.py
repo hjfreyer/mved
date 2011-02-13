@@ -54,7 +54,10 @@ def Confirm():
 def DoRename(rename_pairs):
   try:
     for (old, new) in rename_pairs:
-      os.rename(old, new)
+      if new:
+        os.rename(old, new)
+      else:
+        os.unlink(old)
   except OSError, e:
     print 'ERROR: Failure during rename.'
     raise
